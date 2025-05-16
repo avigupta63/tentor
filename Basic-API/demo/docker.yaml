@@ -1,0 +1,36 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: docker-build
+  namespace: tekton-pipelines
+spec:
+  params:
+    - name: ecr-repo
+      type: string
+  workspaces:
+    - name: source
+  steps:
+    - name: build-and-push
+      image: docker
+      securityContext:
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]
+        seccompProfile:
+          type: RuntimeDefault
+      script: |
+        cd $(workspaces.source.path)/source
+        docker build -t $(params.ecr-repo):latest .
+        docker push $(params.ecr-repo):latest
+      env:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: ecr-credentials
+              key: AWS_ACCESS_KEY_ID
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ecr-credentials
+              key: AWS_SECRET_ACCESS_KEY

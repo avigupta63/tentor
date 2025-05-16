@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: checkmarx-scan
+  namespace: tekton-pipelines
+spec:
+  workspaces:
+    - name: source
+  steps:
+    - name: scan
+      image: checkmarx/cxcli:latest
+      script: |
+        cd $(workspaces.source.path)/source
+        cx scan create --project-name demo-app --sast --api-key $(cat /tekton/creds/checkmarx-credentials/api-key)
+      volumeMounts:
+        - name: checkmarx-creds
+          mountPath: /tekton/creds/checkmarx-credentials
+          readOnly: true
+  volumes:
+    - name: checkmarx-creds
+      secret:
+        secretName: checkmarx-credentials

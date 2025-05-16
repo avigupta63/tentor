@@ -1,0 +1,69 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: demo-pipeline
+  namespace: tekton-pipelines
+spec:
+  workspaces:
+    - name: shared-workspace
+    - name: maven-cache
+  params:
+    - name: repo-url
+      type: string
+    - name: branch
+      type: string
+      default: main
+    - name: ecr-repo
+      type: string
+  tasks:
+    - name: clone
+      taskRef:
+        name: git-clone
+      params:
+        - name: repo-url
+          value: $(params.repo-url)
+        - name: branch
+          value: $(params.branch)
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+
+    - name: build
+      taskRef:
+        name: maven-build
+      runAfter:
+        - clone
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+        - name: maven-cache
+          workspace: maven-cache
+
+    # You must define fossa and checkmarx tasks if using them
+    # For now, removing them to allow the pipeline to run
+
+    - name: docker-build
+      taskRef:
+        name: kaniko
+      runAfter:
+        - build
+      params:
+        - name: IMAGE
+          value: $(params.ecr-repo):latest
+        - name: DOCKERFILE
+          value: ./Basic-API/demo/Dockerfile
+        - name: CONTEXT
+          value: ./Basic-API/demo
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+
+    - name: deploy
+      taskRef:
+        name: deploy-eks
+      runAfter:
+        - docker-build
+      params:
+        - name: ecr-repo
+          value: $(params.ecr-repo)
+

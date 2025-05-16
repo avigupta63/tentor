@@ -1,0 +1,11 @@
+/home/avigupta/TentorCiCd/Basic-API/demo/src/main/java/com/example/demo/DemoApplication.java
+/home/avigupta/TentorCiCd/Basic-API/demo/src/main/java/com/example/demo/controller/UserController.java
+/home/avigupta/TentorCiCd/Basic-API/demo/src/main/java/com/example/demo/model/Entity.java
+/home/avigupta/TentorCiCd/Basic-API/demo/src/main/java/com/example/demo/model/GeneratedValue.java
+/home/avigupta/TentorCiCd/Basic-API/demo/src/main/java/com/example/demo/model/GenerationType.java
+/home/avigupta/TentorCiCd/Basic-API/demo/src/main/java/com/example/demo/model/Id.java
+/home/avigupta/TentorCiCd/Basic-API/demo/src/main/java/com/example/demo/model/User.java
+/home/avigupta/TentorCiCd/Basic-API/demo/src/main/java/com/example/demo/model/ate.java
+/home/avigupta/TentorCiCd/Basic-API/demo/src/main/java/com/example/demo/repository/JpaRepository.java
+/home/avigupta/TentorCiCd/Basic-API/demo/src/main/java/com/example/demo/repository/UserRepository.java
+/home/avigupta/TentorCiCd/Basic-API/demo/src/main/java/com/example/demo/service/UserService.java
