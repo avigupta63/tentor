@@ -10,6 +10,7 @@ pipeline {
         }
         stage('build') {
             steps {
+                dir('demo/demo') {
                 sh '/opt/apache-maven/bin/mvn clean package'
                 // Add your test commands here
             }
