@@ -2,33 +2,30 @@ pipeline {
     agent any
 
     stages {
-        stage('pull') {
+        stage('Pull') {
             steps {
                 git branch: 'main', url: 'https://github.com/avigupta63/tentor.git'
-                // Add your pull commands here
             }
         }
-        stage('build') {
+
+        stage('Build') {
             steps {
                 dir('demo/demo') {
-                sh '/opt/apache-maven/bin/mvn clean package'
-                // Add your test commands here
+                    sh '/opt/apache-maven/bin/mvn clean package'
+                }
             }
         }
-        stage('test') {
+
+        stage('Test') {
             steps {
-                echo 'test success...'
-                // Add your deployment commands here
+                echo 'Test success...'
             }
         }
-        stage('deploy') {
+
+        stage('Deploy') {
             steps {
-                echo 'deploy success...'
-                // Add your deployment commands here
+                echo 'Deploy success...'
             }
         }
     }
-
-
-}
 }
