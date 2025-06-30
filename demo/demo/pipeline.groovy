@@ -10,7 +10,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh '/opt/maven/bin/mvn clean package'
+                sh 'mvn clean package'
                 // Add your test commands here
             }
         }
