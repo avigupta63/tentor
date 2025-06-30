@@ -18,7 +18,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh '''mvn sonar:sonar   -Dsonar.projectKey=tentor   -Dsonar.host.url=http://18.223.43.200:9000   -Dsonar.login=3dbfe233c14100b3a63c765c3c6114c1b00ce63f
+                sh '''/opt/apache-maven/bin/mvn sonar:sonar   -Dsonar.projectKey=tentor   -Dsonar.host.url=http://18.223.43.200:9000   -Dsonar.login=3dbfe233c14100b3a63c765c3c6114c1b00ce63f
 '''
             }
         }
