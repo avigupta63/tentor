@@ -24,7 +24,15 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'ed305a25-4a1b-4a2b-b400-d5ea2916b134', path: '', url: 'http://3.145.61.1:8080/')], contextPath: '/', war: '**/*.war'
+                stage('Deploy') {
+    steps {
+        sh '''
+        scp -i ohio.pem demo/demo/target/*.jar ubuntu@18.191.129.243:/home/ubuntu/
+        ssh -i ohio.pem ubuntu@18.191.129.243 "pkill -f 'java -jar' || true && nohup java -jar /home/ubuntu/*.jar > app.log 2>&1 &"
+        '''
+    }
+}
+
             }
         }
     }
