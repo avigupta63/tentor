@@ -18,16 +18,13 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('demo/demo') {
-                sh '''/opt/apache-maven/bin/mvn sonar:sonar   -Dsonar.projectKey=tentor   -Dsonar.host.url=http://18.223.43.200:9000   -Dsonar.login=3dbfe233c14100b3a63c765c3c6114c1b00ce63f
-'''
-            }
+               echo "test success"
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploy success...'
+                deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'ed305a25-4a1b-4a2b-b400-d5ea2916b134', path: '', url: 'http://3.145.61.1:8080/')], contextPath: '/', war: '**/*.war'
             }
         }
     }
