@@ -33,7 +33,7 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no ubuntu@18.191.129.243 '
                             pkill -f "java -jar" || true
                             nohup java -jar /home/ubuntu/demo-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
-                        '
+                        
                     '''
                 }
             }
