@@ -21,7 +21,12 @@ pipeline {
                echo "test success"
             }
         }
-
+           stage (quality_gate) {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                  }  waitForQualityGate true
+                }
+           }
                 stage('Deploy') {
     steps {
           sshagent (credentials: ['ec2-ssh-ohio']) {
